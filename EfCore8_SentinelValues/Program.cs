@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using var db = new MyContext();
 db.Database.Migrate();
 
-var newCustomer = new Customer {Name = "Default values"};
+var newCustomer = new Customer {Name = "Default values, points: 10"};
 db.Add(newCustomer);
 db.SaveChanges();
 
