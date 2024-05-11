@@ -6,6 +6,12 @@ internal class MyContext : DbContext
 {
     public DbSet<Customer> Customers { get; set; }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        string databaseName = "SentinelValues";
+        optionsBuilder.UseSqlServer($"Server=localhost,1433;Database={databaseName};User Id=sa;Password=Password123#;MultipleActiveResultSets=true;Encrypt=false");
+    }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Customer>()
@@ -13,6 +19,10 @@ internal class MyContext : DbContext
 
         modelBuilder.Entity<Customer>()
             .Property(x => x.Id);
+
+        modelBuilder.Entity<Customer>()
+            .Property(x => x.Name)
+            .IsRequired();
 
         modelBuilder.Entity<Customer>()
             .Property(x => x.Status)
@@ -23,6 +33,7 @@ internal class MyContext : DbContext
             .Property(x => x.Points)
             .IsRequired()
             .HasDefaultValue(10);
+            //.HasSentinel(0);
 
         modelBuilder.Entity<Customer>()
             .Property(x => x.Created)
