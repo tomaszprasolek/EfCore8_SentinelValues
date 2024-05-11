@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using var db = new MyContext();
 db.Database.Migrate();
 
-var newCustomer = new Customer {Name = "Default values, points: 10"};
-db.Add(newCustomer);
-db.SaveChanges();
-
-newCustomer = new Customer {Name = "Zero points", Points = 0 };
-db.Add(newCustomer);
-db.SaveChanges();
+AddCustomer(new Customer {Name = "Default values, points: 10"});
+AddCustomer(new Customer {Name = "Zero points", Points = 0 });
+AddCustomer(new Customer {Name = "-1 points", Points = -1});
+AddCustomer(new Customer {Name = "-2 points", Points = -2});
 
 Console.WriteLine("All customers:");
 var allCustomers = db.Customers.ToList();
@@ -20,4 +17,10 @@ foreach (Customer customer in allCustomers)
     
 }
 
-//Console.ReadKey();
+return;
+
+void AddCustomer(Customer customer)
+{
+    db.Add(customer);
+    db.SaveChanges();
+}

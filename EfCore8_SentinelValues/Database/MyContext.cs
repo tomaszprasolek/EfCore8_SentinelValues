@@ -32,8 +32,8 @@ internal class MyContext : DbContext
         modelBuilder.Entity<Customer>()
             .Property(x => x.Points)
             .IsRequired()
-            .HasDefaultValue(10)
-            .HasSentinel(-1);
+            .HasDefaultValue(10);
+            //.HasSentinel(-1);
 
         modelBuilder.Entity<Customer>()
             .Property(x => x.Created)
